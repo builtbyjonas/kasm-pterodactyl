@@ -6,7 +6,7 @@
   },
   "exported_at": "2026-05-07T00:00:00+00:00",
   "name": "Kasm Workspaces",
-  "author": "ByJonas",
+  "author": "me@byjonas.dev",
   "description": "Kasm Workspaces CE - Browser-based Desktops & Apps",
   "features": null,
   "docker_images": {
@@ -35,7 +35,7 @@
       "default_value": "",
       "user_viewable": true,
       "user_editable": false,
-      "rules": "required|string|max:128"
+      "rules": "string|max:128"
     },
     {
       "name": "User Password",
@@ -44,7 +44,7 @@
       "default_value": "",
       "user_viewable": true,
       "user_editable": false,
-      "rules": "required|string|max:128"
+      "rules": "string|max:128"
     }
   ]
 }

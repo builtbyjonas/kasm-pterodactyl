@@ -5,8 +5,6 @@ LABEL maintainer="BuiltByJonas"
 LABEL description="Kasm Workspaces for Pterodactyl"
 
 # Pterodactyl-specific environment
-ENV PUID=1000
-ENV PGID=1000
 ENV TZ=Europe/Berlin
 ARG KASM_PORT=443
 ENV KASM_PORT=${KASM_PORT}
@@ -20,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 COPY <<-'EOF' /custom-services.d/ptero-api-relay/run
 #!/usr/bin/with-contenv bash
 echo "[KASM-PETERODACTYL] Forwarding Traffic on :${SERVER_PORT:-443} to Kasm :443"
-exec s6-envuidgid root socat TCP-LISTEN:${SERVER_PORT:-443},reuseaddr,fork,bind=0.0.0.0 TCP:127.0.0.1:443
+exec socat TCP-LISTEN:${SERVER_PORT:-443},reuseaddr,fork,bind=0.0.0.0 TCP:127.0.0.1:443
 EOF
 
 # ---- 2. SETUP PASSWORD SYNC PYTHON SCRIPT ----
@@ -85,8 +83,10 @@ done
 exec sleep infinity
 EOF
 
-# Set permissions for the s6 run files
-RUN chmod +x /custom-services.d/ptero-api-relay/run /custom-services.d/ptero-db-sync/run
+# Rootless Pterodactyl Fixes (UID 999 mappings for the container daemon runtime restrictions)
+RUN chmod +x /custom-services.d/ptero-api-relay/run /custom-services.d/ptero-db-sync/run && \
+    mkdir -p /run /var/run && \
+    chown -R 999:999 /run /var/run /var/log /custom-services.d /opt /etc/s6-overlay || true
 
 # Volume for persistant data
 VOLUME /config /opt/kasm

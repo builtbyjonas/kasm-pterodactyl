@@ -1,10 +1,31 @@
 {
+  "_comment": "Pterodactyl Panel Egg for Kasm Workspaces CE - Browser-based Desktops & Apps",
+  "meta": {
+    "version": "PTDL_v2",
+    "update_url": null
+  },
+  "exported_at": "2026-05-07T00:00:00+00:00",
   "name": "Kasm Workspaces",
+  "author": "ByJonas",
   "description": "Kasm Workspaces CE - Browser-based Desktops & Apps",
+  "features": null,
+  "docker_images": {
+    "ghcr.io/builtbyjonas/kasm-pterodactyl:latest": "ghcr.io/builtbyjonas/kasm-pterodactyl:latest"
+  },
+  "file_denylist": [],
   "startup": "/init",
-  "docker": {
-    "image": "ghcr.io/builtbyjonas/kasm-pterodactyl:latest",
+  "config": {
+    "files": "{}",
+    "startup": "{\r\n    \"done\": \"Started\"\r\n}",
+    "logs": "{}",
     "stop": "kill"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\napt update\napt install -y curl\nmkdir -p /mnt/server\necho \"Kasm container ready.\"",
+      "container": "debian:bookworm-slim",
+      "entrypoint": "bash"
+    }
   },
   "variables": [
     {
@@ -12,6 +33,7 @@
       "description": "Admin Passwort (generated automatically)",
       "env_variable": "ADMIN_PASS",
       "default_value": "",
+      "user_viewable": true,
       "user_editable": false,
       "rules": "required|string|max:128"
     },
@@ -20,14 +42,9 @@
       "description": "Standard User Passwort (generated automatically)",
       "env_variable": "USER_PASS",
       "default_value": "",
+      "user_viewable": true,
       "user_editable": false,
       "rules": "required|string|max:128"
     }
-  ],
-  "build": {
-    "default": {
-      "port": 443,
-      "image": "ghcr.io/builtbyjonas/kasm-pterodactyl:latest"
-    }
-  }
+  ]
 }

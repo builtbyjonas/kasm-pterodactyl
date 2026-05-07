@@ -9,14 +9,14 @@ on:
     branches:
       - main
     paths:
-      - 'Dockerfile'
-      - 'entrypoint.sh'
+      - 'docker/Dockerfile'
+      - 'docker/entrypoint.sh'
   pull_request:
     branches:
       - main
     paths:
-      - 'Dockerfile'
-      - 'entrypoint.sh'
+      - 'docker/Dockerfile'
+      - 'docker/entrypoint.sh'
   workflow_dispatch:
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
-          context: .
+          context: docker
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/builtbyjonas/kasm-pterodactyl:latest
           cache-from: type=registry,ref=ghcr.io/builtbyjonas/kasm-pterodactyl:buildcache

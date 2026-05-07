@@ -84,15 +84,17 @@ exec sleep infinity
 EOF
 
 # Rootless Pterodactyl & Read-Only Root Fixes
-# 1. Symlink /run and /var/run to /tmp (since Pelican mounts /tmp as a writable tmpfs)
+# 1. Symlink /run to /tmp (since Pelican mounts /tmp as a writable tmpfs)
 # 2. Tell s6-overlay that it's running in a read-only container root
+# 3. Patch out s6-overlay's aggressive /var/run symlink validation since Pelican mounts over it
 ENV S6_READ_ONLY_ROOT=1
 RUN chmod +x /custom-services.d/ptero-api-relay/run /custom-services.d/ptero-db-sync/run && \
-    rm -rf /run /var/run && \
-    ln -s /tmp /run && \
-    ln -s /run /var/run && \
+    rm -rf /run && ln -s /tmp /run && \
     mkdir -p /tmp/s6 /tmp/s6-overlay && \
-    chown -R 999:999 /tmp /var/log /custom-services.d /opt /etc/s6-overlay || true
+    chown -R 999:999 /tmp /var/log /custom-services.d /opt /etc/s6-overlay || true && \
+    sed -i 's|/var/run is not a symlink to /run|SKIPPED PTERO VAR RUN CHECK|g' /package/admin/s6-overlay/libexec/preinit && \
+    sed -i 's|rm -rf /var/run||g' /package/admin/s6-overlay/libexec/preinit && \
+    sed -i 's|ln -s /run /var/run||g' /package/admin/s6-overlay/libexec/preinit
 
 # Volume for persistant data
 VOLUME /config /opt/kasm

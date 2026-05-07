@@ -1,0 +1,62 @@
+{
+    "_comment": "Pterodactyl Panel Egg for Kasm Workspaces CE - Browser-based Desktops & Apps",
+    "meta": {
+        "version": "PLCN_v3",
+        "update_url": null
+    },
+    "exported_at": "2026-05-07T00:00:00+00:00",
+    "name": "Kasm Workspaces",
+    "author": "me@byjonas.dev",
+    "description": "Kasm Workspaces CE - Browser-based Desktops & Apps",
+    "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTIiIGhlaWdodD0iMTA3IiB2aWV3Qm94PSIwIDAgOTIgMTA3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNOTEgMjcuMzE1NFY3OS42NDI2TDQ2IDEwNS44MDJMMSA3OS42NDI2VjI3LjMxNTRMNDYgMS4xNTYyNUw5MSAyNy4zMTU0WiIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzFBOTlENCIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0zMC43NTc5IDczLjc5MTZWNzYuNTAzOVY4MC4xNTgyTDQwLjMzODEgODUuNjM1OUw0Mi42NzA1IDg3LjAyNjJMNDUuODIzNCA4OC44NDk1TDQ4LjAzNDIgODQuODYwOUw0OC45NzYyIDgwLjU5ODhMNDUuODIzNCA3Ny44MzM0TDMwLjc1NzkgNjkuMDgxM1Y3My43OTE2WiIgZmlsbD0iIzE4NUY4NSIvPgo8cGF0aCBkPSJNNzYuMDAwOCA3MS40NjY5VjU0LjAyMzRDNzYuMDAwOCA0OC4yNjQ3IDc2LjAwMDggNDIuNDUyNyA3Ni4wMDA4IDM2LjYzMzJMNjkuNjg3NCAzNi40MTI4TDY4LjM1NzkgMzguNDY0MUw2Ni40MjA2IDQyLjE3MTZWNjUuOTI4NUw0NS44MjQyIDc3LjgzMzVWODIuNDgzVjg4Ljg0OTZDNTUuODk4MyA4My4wMzc2IDY1LjkyNjcgNzcuMjI1NyA3Ni4wMDA4IDcxLjQ2NjlaIiBmaWxsPSIjMEQ4NEJFIi8+CjxwYXRoIGQ9Ik0yNS4yMjYzIDQ4LjUzODJWMzEuMDk0N0wxNS42OTkyIDM2LjYzMzJWNzEuNDY2OUwyNS4yMjYzIDc2Ljk0NDZWNTkuNTYxOUw0NS44MjI2IDcxLjQ2NjlWNjAuMzlMMzQuODA2NSA1NC4wMjM1TDQ1LjgyMjYgNDcuNjU2OVYzNi42MzMyTDI1LjIyNjMgNDguNTM4MloiIGZpbGw9IiMyQTJEMzEiLz4KPHBhdGggZD0iTTQ1LjgyMzQgMTkuMjUwNEM1NS44OTc0IDI1LjA2MjQgNjUuOTI1OSAzMC44MjEyIDc1Ljk5OTkgMzYuNjMzMUw3MC40NjE1IDM5Ljg0NjhMNjYuNDE5NyA0Mi4xNzE2TDQ1LjgyMzQgMzAuMjY2NkwzMC43NTc5IDM4Ljk1NzlDMzAuNzU3OSAzNS4zMDM2IDMwLjc1NzkgMzEuNTk2MSAzMC43NTc5IDI3Ljk0MThMNDUuODIzNCAxOS4yNTA0WiIgZmlsbD0iIzFBOUJENyIvPgo8L3N2Zz4K",
+    "tags": [],
+    "features": null,
+    "docker_images": {
+        "ghcr.io/builtbyjonas/kasm-pterodactyl:latest": "ghcr.io/builtbyjonas/kasm-pterodactyl:latest"
+    },
+    "file_denylist": [],
+    "startup_commands": {
+        "Default": "/init"
+    },
+    "config": {
+        "files": "{}",
+        "startup": "{\n    \"done\": \"Started\"\n}",
+        "logs": "{}",
+        "stop": "kill"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!/bin/bash\napt update\napt install -y curl\nmkdir -p /mnt/server\necho \"Kasm container ready.\"",
+            "container": "debian:bookworm-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Admin Password",
+            "description": "Admin Passwort (generated automatically)",
+            "env_variable": "ADMIN_PASS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": [
+                "string",
+                "max:128"
+            ],
+            "sort": null
+        },
+        {
+            "name": "User Password",
+            "description": "Standard User Passwort (generated automatically)",
+            "env_variable": "USER_PASS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": [
+                "string",
+                "max:128"
+            ],
+            "sort": null
+        }
+    ]
+}

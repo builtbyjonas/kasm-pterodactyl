@@ -83,11 +83,17 @@ done
 exec sleep infinity
 EOF
 
-# Rootless Pterodactyl Fixes (UID 999 mappings for the container daemon runtime restrictions)
+# Rootless Pterodactyl & Read-Only Root Fixes
+# 1. Symlink /run and /var/run to /tmp (since Pelican mounts /tmp as a writable tmpfs)
+# 2. Tell s6-overlay that it's running in a read-only container root
+ENV S6_READ_ONLY_ROOT=1
 RUN chmod +x /custom-services.d/ptero-api-relay/run /custom-services.d/ptero-db-sync/run && \
-    mkdir -p /run /var/run && \
-    chown -R 999:999 /run /var/run /var/log /custom-services.d /opt /etc/s6-overlay || true
-
+    rm -rf /run /var/run && \
+    ln -s /tmp /run && \
+    ln -s /tmp /var/run && \
+    mkdir -p /tmp/s6 /tmp/s6-overlay && \
+    chown -R 999:999 /tmp /var/log /custom-services.d /opt /etc/s6-overlay || true
+    
 # Volume for persistant data
 VOLUME /config /opt/kasm
 

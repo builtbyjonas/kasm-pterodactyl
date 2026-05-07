@@ -1,0 +1,33 @@
+{
+  "name": "Kasm Workspaces",
+  "description": "Kasm Workspaces CE - Browser-based Desktops & Apps",
+  "startup": "/init",
+  "docker": {
+    "image": "ghcr.io/builtbyjonas/kasm-pterodactyl:latest",
+    "stop": "kill"
+  },
+  "variables": [
+    {
+      "name": "Admin Password",
+      "description": "Admin Passwort (generated automatically)",
+      "env_variable": "ADMIN_PASS",
+      "default_value": "",
+      "user_editable": false,
+      "rules": "required|string|max:128"
+    },
+    {
+      "name": "User Password",
+      "description": "Standard User Passwort (generated automatically)",
+      "env_variable": "USER_PASS",
+      "default_value": "",
+      "user_editable": false,
+      "rules": "required|string|max:128"
+    }
+  ],
+  "build": {
+    "default": {
+      "port": 443,
+      "image": "ghcr.io/builtbyjonas/kasm-pterodactyl:latest"
+    }
+  }
+}

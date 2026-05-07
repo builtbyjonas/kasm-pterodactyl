@@ -90,10 +90,10 @@ ENV S6_READ_ONLY_ROOT=1
 RUN chmod +x /custom-services.d/ptero-api-relay/run /custom-services.d/ptero-db-sync/run && \
     rm -rf /run /var/run && \
     ln -s /tmp /run && \
-    ln -s /tmp /var/run && \
+    ln -s /run /var/run && \
     mkdir -p /tmp/s6 /tmp/s6-overlay && \
     chown -R 999:999 /tmp /var/log /custom-services.d /opt /etc/s6-overlay || true
-    
+
 # Volume for persistant data
 VOLUME /config /opt/kasm
 

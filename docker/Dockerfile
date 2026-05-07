@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
 VOLUME /config /opt/kasm
 
 # Entry point script
-COPY docker/entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Wrap LSIO init
